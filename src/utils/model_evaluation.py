@@ -17,7 +17,6 @@ class ModelEvaluator:
         model_name: str = 'paraphrase-MiniLM-L6-v2',
         cache_dir: str = None
     ):
-        """Initialize the model evaluator with dataset and model configurations."""
         self.data_path = Path(data_path)
         self.model_name = model_name
         self.cache_dir = Path(cache_dir) if cache_dir else None
@@ -25,9 +24,9 @@ class ModelEvaluator:
         self._load_data()
         
         try:
-            logger.info(f"Initializing transformer model: {model_name}")
+            #print("initialising sentence transformer model")
             self.transformer = SentenceTransformer(model_name)
-            logger.info(f"Initializing TF-IDF vectorizer")
+            #print("initialising tfidf model")
             self.tfidf = TfidfVectorizer(stop_words='english')
             
             self._compute_embeddings()
