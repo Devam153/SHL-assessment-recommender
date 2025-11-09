@@ -8,9 +8,7 @@ from tqdm import tqdm
 
 def scrape_descriptions(csv_path: str, output_path: str = None) -> pd.DataFrame:
     """
-    Scrape the detailed description text from each SHL assessment page and
-    add it as a new column to the catalog CSV.
-
+    Scrape the detailed description text from each SHL assessment page and add it as a new column to the catalog CSV.
     Args:
         csv_path: Path to input CSV containing at least a 'Link' column.
         output_path: Path to save enriched CSV. If None, appends '_with_desc.csv'.
