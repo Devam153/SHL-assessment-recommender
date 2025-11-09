@@ -24,7 +24,7 @@ def scrape_descriptions(csv_path: str, output_path: str = None) -> pd.DataFrame:
         df['Description'] = None
 
     for idx, row in tqdm(df.iterrows(), total=len(df), desc='Scraping descriptions'):
-        url = row.get('Link') or row.get('link')
+        url = row.get('Link')
         if not url:
             continue
 
