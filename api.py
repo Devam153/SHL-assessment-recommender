@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="SHL Assessment Recommender API",
-    description="API for recommending SHL assessments based on job descriptions and queries.",
+    description="API for recommending SHL assessments based on job descriptions and queries",
     version="1.0.0"
 )
 
@@ -55,7 +55,7 @@ def initialize_model():
         
         os.makedirs('cache', exist_ok=True)
         
-        model = ModelEvaluator('src/data/shl_full_catalog_with_duration_desc.csv')
+        model = ModelEvaluator('src/data/shl_full_catalog_with_duration_desc.csv', cache_dir='cache')
         logger.info("Model initialization completed successfully")
     except Exception as e:
         logger.error(f"Error initializing model: {str(e)}")
@@ -88,7 +88,7 @@ async def health_check():
             status_code=503,
             content={
                 "status": "unhealthy",
-                "model_status": "Model is initializing, please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model is reloaded from scratch."
+                "model_status": "Model is initializing, please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model gets reloaded from scratch. Also, I cannot cache due to limited storage given on the free tier."
             }
         )
 
@@ -127,13 +127,13 @@ async def process_recommendation(query: str, top_k: int, format: str):
     if model is None and model_initializing:
         response_obj = {
             "status": "initializing",
-            "message": "Please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model is reloaded from scratch."
+            "message": "Please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model gets reloaded from scratch. Also, I cannot cache due to limited storage given on the free tier."
         }
         pretty_json = json.dumps(response_obj, indent=2, ensure_ascii=False)
         return Response(content=pretty_json, media_type="application/json", status_code=202)
     
     if model is None:
-        raise HTTPException(status_code=503, detail="Model not initialized. Please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model is reloaded from scratch.")
+        raise HTTPException(status_code=503, detail="Model not initialized. Please wait a few minutes. This is because on Render's free tier, services are spun down after 15 minutes of inactivity. When someone accesses the API after this period, the entire service needs to restart - which means the model gets reloaded from scratch. Also, I cannot cache due to limited storage given on the free tier.")
     
     try:
         start_time = time.time()
