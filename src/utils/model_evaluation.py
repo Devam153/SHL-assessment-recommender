@@ -12,11 +12,12 @@ logger = logging.getLogger(__name__)
 
 class ModelEvaluator:
     def __init__(
-        self,
+        self, 
         data_path: str,
         model_name: str = 'paraphrase-MiniLM-L6-v2',
         cache_dir: str = None
     ):
+        """Initialize the model evaluator with dataset and model configurations."""
         self.data_path = Path(data_path)
         self.model_name = model_name
         self.cache_dir = Path(cache_dir) if cache_dir else None
@@ -24,11 +25,11 @@ class ModelEvaluator:
         self._load_data()
         
         try:
-            #print("initialising sentence transformer model")
-            self.transformer = SentenceTransformer(model_name, device='cpu')
-            #print("initialising tfidf model")
+            logger.info(f"Initializing transformer model: {model_name}")
+            self.transformer = SentenceTransformer(model_name)
+            logger.info(f"Initializing TF-IDF vectorizer")
             self.tfidf = TfidfVectorizer(stop_words='english')
-
+            
             self._compute_embeddings()
         except Exception as e:
             logger.error(f"Error initializing models: {str(e)}")
@@ -47,26 +48,26 @@ class ModelEvaluator:
                 'Remote Testing': 'remoteTestingSupport',
                 'Adaptive/IRT': 'adaptiveIRTSupport',
                 'Test Types': 'testTypes',
-                'Duration': 'duration',
-                'Description': 'description'
+                'Duration': 'duration'
             }
             
+            # Check if columns exist and rename accordingly
             for orig, new in column_mapping.items():
                 if orig in self.df.columns:
                     self.df = self.df.rename(columns={orig: new})
             
             # print(column.mapping)
+    
                 
             if 'duration' not in self.df.columns:
                 logger.warning("Duration column is missing. Adding default value.")
                 self.df['duration'] = "Not specified"
             
             self.df['combined_description'] = (
-                self.df['testName'] + ' ' +
-                self.df['testTypes'] + ' ' +
-                self.df['remoteTestingSupport'] + ' ' +
-                self.df['adaptiveIRTSupport'] + ' ' +
-                self.df.get('description', '')
+                self.df['testName'] + ' ' + 
+                self.df['testTypes'] + ' ' + 
+                self.df['remoteTestingSupport'] + ' ' + 
+                self.df['adaptiveIRTSupport']
             ).fillna('')
             
             logger.info("Assessment data loaded and preprocessed successfully")
@@ -90,13 +91,12 @@ class ModelEvaluator:
                 
                 self.embeddings = self.transformer.encode(
                     descriptions,
-                    show_progress_bar=False,
-                    batch_size=8
+                    show_progress_bar=True
                 )
                 
                 if cache_file:
                     logger.info(f"Caching embeddings to {cache_file}")
-                    cache_file.parent.mkdir(parents=True, exist_ok=True) 
+                    cache_file.parent.mkdir(parents=True, exist_ok=True) # ensure directory exists
                     np.save(cache_file, self.embeddings)
             
             logger.info("Computing TF-IDF matrix")
@@ -108,11 +108,11 @@ class ModelEvaluator:
         
     def _semantic_search(self, query: str, top_k: int = 5) -> list:
         """Perform semantic search using transformer embeddings."""
-        query_embedding = self.transformer.encode([query], batch_size=1)[0]
+        query_embedding = self.transformer.encode([query])[0]
         similarities = cosine_similarity([query_embedding], self.embeddings)[0]
-
+        
         top_indices = np.argsort(similarities)[-top_k:][::-1]
-
+        
         return [
             {
                 'testName': self.df.iloc[idx]['testName'],
@@ -151,17 +151,17 @@ class ModelEvaluator:
     def _hybrid_search(self, query: str, top_k: int = 5, alpha: float = 0.7) -> list:
         """Perform hybrid search combining semantic and TF-IDF approaches."""
         # Get semantic similarities
-        query_embedding = self.transformer.encode([query], batch_size=1)[0]
+        query_embedding = self.transformer.encode([query])[0]
         sem_similarities = cosine_similarity([query_embedding], self.embeddings)[0]
-
+        
         # Get TF-IDF similarities
         query_vec = self.tfidf.transform([query])
         tfidf_similarities = cosine_similarity(query_vec, self.tfidf_matrix)[0]
-
+        
         # Combine scores
         combined_similarities = alpha * sem_similarities + (1 - alpha) * tfidf_similarities
         top_indices = np.argsort(combined_similarities)[-top_k:][::-1]
-
+        
         return [
             {
                 'testName': self.df.iloc[idx]['testName'],
