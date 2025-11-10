@@ -33,13 +33,7 @@ st.markdown("""
         color: #6B7280;
         margin-bottom: 2rem;
     }
-    .card {
-        background-color: #F9FAFB;
-        border-radius: 0.5rem;
-        padding: 1.5rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        margin-bottom: 1rem;
-    }
+
     .highlight {
         background-color: #DBEAFE;
         padding: 0.2rem 0.4rem;
@@ -334,7 +328,6 @@ def main():
     
     with tab4:
         st.markdown("""
-        ## About SHL Assessment Recommender
                 
         ### Key Features
         
@@ -349,7 +342,7 @@ def main():
 
         with col1:
             st.markdown("""
-            - Python (Core language)  
+            - Python 
             - FastAPI (REST API framework)  
             - Streamlit (Web app framework)  
             """)

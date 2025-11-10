@@ -38,4 +38,3 @@ def add_search_method_explanation() -> None:
             - Default recommendation method in the system
             """)
             
-        st.info("The benchmark results show how each method performs on sample queries. Higher recall and precision values indicate better performance, while lower processing time indicates faster results.")
