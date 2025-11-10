@@ -416,14 +416,9 @@ def main():
 
         st.markdown("""
         ### Source Code
-        Access the complete project on GitHub: [SHL Recommender](https://github.com/Devam153/SHL-assessment)
+        Access the complete project on GitHub: [SHL Recommender](https://github.com/Devam153/SHL-assessment-recommender)
         """)
     
-    st.markdown("""
-    <div class="footer">
-        SHL Assessment Recommender • Built with Streamlit • Data Source: SHL Product Catalog
-    </div>
-    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
