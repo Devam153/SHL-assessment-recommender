@@ -14,7 +14,7 @@ class ModelEvaluator:
     def __init__(
         self,
         data_path: str,
-        model_name: str = 'all-MiniLM-L6-v2',
+        model_name: str = 'paraphrase-MiniLM-L6-v2',
         cache_dir: str = None
     ):
         self.data_path = Path(data_path)
