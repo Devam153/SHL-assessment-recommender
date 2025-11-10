@@ -376,10 +376,10 @@ def main():
         with col1:
             st.markdown("#### GET Request")
             st.code("""
-        https://shl-assessment-zlp2.onrender.com/recommend?query=java+developer+40+minutes&top_k=5
+        https://shl-recommender15.onrender.com/recommend?query=java+developer+40+minutes&top_k=5
 
         # Using PowerShell
-        Invoke-RestMethod -Uri "https://shl-assessment-zlp2.onrender.com/recommend?query=java developer 40 minutes&top_k=5" -Method Get | ConvertTo-Json -Depth 10 -Compress:$false
+        Invoke-RestMethod -Uri "https://shl-recommender15.onrender.com/recommend?query=java developer 40 minutes&top_k=5" -Method Get | ConvertTo-Json -Depth 10 -Compress:$false
 
         """, language="powershell")
 
@@ -387,7 +387,7 @@ def main():
             st.markdown("#### POST Request")
             st.code("""
         # Using curl
-        curl -X POST "https://shl-assessment-zlp2.onrender.com/recommend" \\
+        curl -X POST "https://shl-recommender15.onrender.com/recommend" \\
             -H "Content-Type: application/json" \\
             -d '{"query": "python developer", "top_k": 5}'
 
@@ -397,7 +397,7 @@ def main():
             top_k = 5
         } | ConvertTo-Json
 
-        Invoke-RestMethod -Uri "https://shl-assessment-zlp2.onrender.com/recommend" \\
+        Invoke-RestMethod -Uri "https://shl-recommender15.onrender.com/recommend" \\
                         -Method Post \\
                         -ContentType "application/json" \\
                         -Body $body
@@ -411,7 +411,7 @@ def main():
 
         st.markdown("### Health Check Endpoint")
         st.code("""
-        https://shl-assessment-zlp2.onrender.com/health
+        https://shl-recommender15.onrender.com/health
                 """)
 
         st.markdown("""

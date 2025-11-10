@@ -1,11 +1,10 @@
-# SHL Assessment Recommender 
+# SHL Assessment Recommender
 
-Project Website: https://shl-assessment-9vuzh8xdu2vvchdhvcnxtq.streamlit.app
+Project Website: https://shl-recommender15.streamlit.app
 
-API endpoint (query) - https://shl-assessment-zlp2.onrender.com/recommend?query=java+developer+40+minutes&top_k=5
+API endpoint (query) - https://shl-recommender15.onrender.com/recommend?query=java+developer+40+minutes&top_k=5
 
-
-API endpoint (health check) - https://shl-assessment-zlp2.onrender.com/health
+API endpoint (health check) - https://shl-recommender15.onrender.com/health
 
 ## Overview
 

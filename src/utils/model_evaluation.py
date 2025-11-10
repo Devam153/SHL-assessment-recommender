@@ -47,7 +47,8 @@ class ModelEvaluator:
                 'Remote Testing': 'remoteTestingSupport',
                 'Adaptive/IRT': 'adaptiveIRTSupport',
                 'Test Types': 'testTypes',
-                'Duration': 'duration'
+                'Duration': 'duration',
+                'Description': 'description'
             }
             
             for orig, new in column_mapping.items():
@@ -61,10 +62,11 @@ class ModelEvaluator:
                 self.df['duration'] = "Not specified"
             
             self.df['combined_description'] = (
-                self.df['testName'] + ' ' + 
-                self.df['testTypes'] + ' ' + 
-                self.df['remoteTestingSupport'] + ' ' + 
-                self.df['adaptiveIRTSupport']
+                self.df['testName'] + ' ' +
+                self.df['testTypes'] + ' ' +
+                self.df['remoteTestingSupport'] + ' ' +
+                self.df['adaptiveIRTSupport'] + ' ' +
+                self.df.get('description', '')
             ).fillna('')
             
             logger.info("Assessment data loaded and preprocessed successfully")
