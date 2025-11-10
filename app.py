@@ -299,8 +299,7 @@ def main():
                 )
                 
                 st.markdown("### Benchmark Results")
-                st.dataframe(benchmark_results)
-                
+
                 for metric in selected_metrics:
                     if metric in benchmark_results.columns:
                         plot_benchmark_comparison(benchmark_results, metric)
@@ -422,3 +421,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
