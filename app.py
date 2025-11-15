@@ -314,14 +314,7 @@ def main():
                     
                     - **Semantic**: Uses neural embeddings to understand meaning and context.
                     - **TF-IDF**: Uses keyword frequency statistics for matching.
-                    - **Hybrid**: Combines both approaches for balanced results.
-                    
-                    If you're seeing zeros across all methods, the system might be unable to find matches between the predictions and ground truth. This could happen if:
-                    
-                    1. The assessment names in the catalog don't match the ground truth items exactly
-                    2. The search methods need further tuning for your specific use case
-                    3. The dataset needs to be preprocessed differently
-                    """)
+                    - **Hybrid**: Combines both approaches for balanced results.""")
     
     with tab4:
         st.markdown("""
