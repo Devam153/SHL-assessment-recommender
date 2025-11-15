@@ -161,14 +161,12 @@ def main():
         
         with st.expander("Advanced Filters"):
             col1, col2 = st.columns(2)
-            
+
             with col1:
-                remote_only = st.checkbox("Remote Testing Support", value=False, 
-                                        help="Only show assessments with remote testing capability")
-                
+                remote_only = st.checkbox("Remote Testing Support", value=True)
+
             with col2:
-                adaptive_only = st.checkbox("Adaptive Testing Support", value=False,
-                                          help="Only show assessments with adaptive/IRT capability")
+                adaptive_only = st.checkbox("Adaptive Testing Support", value=True)
                 
             st.write("Test Types (select at least one)")
             col1, col2, col3, col4 = st.columns(4)
