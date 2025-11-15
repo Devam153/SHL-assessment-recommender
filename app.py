@@ -266,7 +266,7 @@ def main():
         
         col1, col2 = st.columns(2)
         with col1:
-            benchmark_k = st.slider("Top-K for evaluation", 1, 10, 3, 
+            benchmark_k = st.slider("Top-K for evaluation", 1, 10, 10, 
                                    help="Number of results to consider for metrics calculation")
         with col2:
             selected_metrics = st.multiselect("Metrics to calculate", 
