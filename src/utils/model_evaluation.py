@@ -64,10 +64,12 @@ class ModelEvaluator:
                 self.df['duration'] = "Not specified"
             
             self.df['combined_description'] = (
-                self.df['testName'] + ' ' + 
-                self.df['testTypes'] + ' ' + 
-                self.df['remoteTestingSupport'] + ' ' + 
-                self.df['adaptiveIRTSupport']
+                self.df['testName'] + ' ' +
+                self.df['testTypes'] + ' ' +
+                self.df['remoteTestingSupport'] + ' ' +
+                self.df['adaptiveIRTSupport'] + ' ' +
+                self.df['Description'] + ' ' +
+                self.df['duration'].astype(str)
             ).fillna('')
             
             logger.info("Assessment data loaded and preprocessed successfully")

@@ -80,7 +80,9 @@ def initialize_model():
             df['testName'] + ' ' +
             df['testTypes'] + ' ' +
             df['remoteTestingSupport'] + ' ' +
-            df['adaptiveIRTSupport']
+            df['adaptiveIRTSupport'] + ' ' +
+            df['Description'] + ' ' +
+            df['duration'].astype(str)
         ).fillna('')
 
         # Initialize TF-IDF
